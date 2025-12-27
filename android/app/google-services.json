@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781425282182",
+    "project_id": "desafio-funcionarios",
+    "storage_bucket": "desafio-funcionarios.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781425282182:android:08556e5151d982a6869507",
+        "android_client_info": {
+          "package_name": "com.flugo.desafio_flugo_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDYlqRWjCMS2NyFVJbM9IGlHGvtJ39tZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
