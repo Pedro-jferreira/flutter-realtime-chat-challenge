@@ -25,7 +25,14 @@ _ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) => _ChatMessage(
   text: json['text'] as String,
   senderId: json['senderId'] as String,
   senderName: json['senderName'] as String,
-  timestamp: DateTime.parse(json['timestamp'] as String),
+  timestamp: const EpochDateTimeConverter().fromJson(
+    json['timestamp'] as Object,
+  ),
+  readBy:
+      (json['readBy'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as bool),
+      ) ??
+      const {},
 );
 
 Map<String, dynamic> _$ChatMessageToJson(_ChatMessage instance) =>
@@ -34,5 +41,6 @@ Map<String, dynamic> _$ChatMessageToJson(_ChatMessage instance) =>
       'text': instance.text,
       'senderId': instance.senderId,
       'senderName': instance.senderName,
-      'timestamp': instance.timestamp.toIso8601String(),
+      'timestamp': const EpochDateTimeConverter().toJson(instance.timestamp),
+      'readBy': instance.readBy,
     };

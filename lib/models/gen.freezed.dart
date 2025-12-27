@@ -810,7 +810,17 @@ as String?,
 /// @nodoc
 mixin _$ChatMessage {
 
- String get id; String get text; String get senderId; String get senderName; DateTime get timestamp;
+  String get id;
+
+  String get text;
+
+  String get senderId;
+
+  String get senderName;
+
+  @EpochDateTimeConverter() DateTime get timestamp;
+
+  Map<String, bool> get readBy;
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -823,16 +833,33 @@ $ChatMessageCopyWith<ChatMessage> get copyWith => _$ChatMessageCopyWithImpl<Chat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.text, text) || other.text == text)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.senderName, senderName) || other.senderName == senderName)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) ||
+      (other.runtimeType == runtimeType && other is ChatMessage &&
+          (identical(other.id, id) || other.id == id) &&
+          (identical(other.text, text) || other.text == text) &&
+          (identical(other.senderId, senderId) || other.senderId == senderId) &&
+          (identical(other.senderName, senderName) ||
+              other.senderName == senderName) &&
+          (identical(other.timestamp, timestamp) ||
+              other.timestamp == timestamp) &&
+          const DeepCollectionEquality().equals(other.readBy, readBy));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,text,senderId,senderName,timestamp);
+int get hashCode =>
+    Object.hash(
+        runtimeType,
+        id,
+        text,
+        senderId,
+        senderName,
+        timestamp,
+        const DeepCollectionEquality().hash(readBy));
 
 @override
 String toString() {
-  return 'ChatMessage(id: $id, text: $text, senderId: $senderId, senderName: $senderName, timestamp: $timestamp)';
+  return 'ChatMessage(id: $id, text: $text, senderId: $senderId, senderName: $senderName, timestamp: $timestamp, readBy: $readBy)';
 }
 
 
@@ -843,7 +870,9 @@ abstract mixin class $ChatMessageCopyWith<$Res>  {
   factory $ChatMessageCopyWith(ChatMessage value, $Res Function(ChatMessage) _then) = _$ChatMessageCopyWithImpl;
 @useResult
 $Res call({
- String id, String text, String senderId, String senderName, DateTime timestamp
+  String id, String text, String senderId, String senderName, @EpochDateTimeConverter() DateTime timestamp, Map<
+      String,
+      bool> readBy
 });
 
 
@@ -860,14 +889,21 @@ class _$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? text = null,Object? senderId = null,Object? senderName = null,Object? timestamp = null,}) {
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call(
+      {Object? id = null, Object? text = null, Object? senderId = null, Object? senderName = null, Object? timestamp = null, Object? readBy = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
 as String,senderName: null == senderName ? _self.senderName : senderName // ignore: cast_nullable_to_non_nullable
 as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime,
+  as DateTime,
+    readBy: null == readBy
+        ? _self.readBy
+        : readBy // ignore: cast_nullable_to_non_nullable
+    as Map<String, bool>,
   ));
 }
 
@@ -952,10 +988,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String text,  String senderId,  String senderName,  DateTime timestamp)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, String text, String senderId, String senderName, @EpochDateTimeConverter() DateTime timestamp, Map<String, bool> readBy)? $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp);case _:
+return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp,_that.readBy);case _:
   return orElse();
 
 }
@@ -973,10 +1009,10 @@ return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timest
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String text,  String senderId,  String senderName,  DateTime timestamp)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, String text, String senderId, String senderName, @EpochDateTimeConverter() DateTime timestamp, Map<String, bool> readBy) $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage():
-return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp);case _:
+return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp,_that.readBy);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -993,10 +1029,10 @@ return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timest
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String text,  String senderId,  String senderName,  DateTime timestamp)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, String text, String senderId, String senderName, @EpochDateTimeConverter() DateTime timestamp, Map<String, bool> readBy)? $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp);case _:
+return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timestamp,_that.readBy);case _:
   return null;
 
 }
@@ -1008,14 +1044,29 @@ return $default(_that.id,_that.text,_that.senderId,_that.senderName,_that.timest
 @JsonSerializable()
 
 class _ChatMessage implements ChatMessage {
-  const _ChatMessage({required this.id, required this.text, required this.senderId, required this.senderName, required this.timestamp});
+  const _ChatMessage(
+      {required this.id, required this.text, required this.senderId, required this.senderName, @EpochDateTimeConverter() required this.timestamp, final Map<
+          String,
+          bool> readBy = const {}}) : _readBy = readBy;
   factory _ChatMessage.fromJson(Map<String, dynamic> json) => _$ChatMessageFromJson(json);
 
 @override final  String id;
 @override final  String text;
 @override final  String senderId;
 @override final  String senderName;
-@override final  DateTime timestamp;
+  @override
+  @EpochDateTimeConverter()
+  final DateTime timestamp;
+  final Map<String, bool> _readBy;
+
+  @override
+  @JsonKey()
+  Map<String, bool> get readBy {
+    if (_readBy is EqualUnmodifiableMapView) return _readBy;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_readBy);
+  }
+
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
@@ -1030,16 +1081,33 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.text, text) || other.text == text)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.senderName, senderName) || other.senderName == senderName)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp));
+  return identical(this, other) ||
+      (other.runtimeType == runtimeType && other is _ChatMessage &&
+          (identical(other.id, id) || other.id == id) &&
+          (identical(other.text, text) || other.text == text) &&
+          (identical(other.senderId, senderId) || other.senderId == senderId) &&
+          (identical(other.senderName, senderName) ||
+              other.senderName == senderName) &&
+          (identical(other.timestamp, timestamp) ||
+              other.timestamp == timestamp) &&
+          const DeepCollectionEquality().equals(other._readBy, _readBy));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,text,senderId,senderName,timestamp);
+int get hashCode =>
+    Object.hash(
+        runtimeType,
+        id,
+        text,
+        senderId,
+        senderName,
+        timestamp,
+        const DeepCollectionEquality().hash(_readBy));
 
 @override
 String toString() {
-  return 'ChatMessage(id: $id, text: $text, senderId: $senderId, senderName: $senderName, timestamp: $timestamp)';
+  return 'ChatMessage(id: $id, text: $text, senderId: $senderId, senderName: $senderName, timestamp: $timestamp, readBy: $readBy)';
 }
 
 
@@ -1050,7 +1118,9 @@ abstract mixin class _$ChatMessageCopyWith<$Res> implements $ChatMessageCopyWith
   factory _$ChatMessageCopyWith(_ChatMessage value, $Res Function(_ChatMessage) _then) = __$ChatMessageCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String text, String senderId, String senderName, DateTime timestamp
+  String id, String text, String senderId, String senderName, @EpochDateTimeConverter() DateTime timestamp, Map<
+      String,
+      bool> readBy
 });
 
 
@@ -1067,14 +1137,21 @@ class __$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? text = null,Object? senderId = null,Object? senderName = null,Object? timestamp = null,}) {
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call(
+      {Object? id = null, Object? text = null, Object? senderId = null, Object? senderName = null, Object? timestamp = null, Object? readBy = null,}) {
   return _then(_ChatMessage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
 as String,senderName: null == senderName ? _self.senderName : senderName // ignore: cast_nullable_to_non_nullable
 as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
-as DateTime,
+  as DateTime,
+    readBy: null == readBy
+        ? _self._readBy
+        : readBy // ignore: cast_nullable_to_non_nullable
+    as Map<String, bool>,
   ));
 }
 
