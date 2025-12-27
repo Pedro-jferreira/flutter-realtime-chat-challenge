@@ -37,6 +37,14 @@ class ChatRepository {
     final user = _authService.currentUser;
     if (user == null) return const Success(unit);
 
-    return _chatService.markMessageAsRead(messageId, user.uid);
+    return _chatService.markMessageAsRead(
+        messageId,
+        user.uid,
+        user.displayName ?? 'Alguém'
+    );
+  }
+
+  Stream<List<ReadReceipt>> getReadReceipts(String messageId) {
+    return _chatService.getReadReceiptsStream(messageId);
   }
 }

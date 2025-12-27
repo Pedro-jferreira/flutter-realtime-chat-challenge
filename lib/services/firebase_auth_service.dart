@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:result_dart/result_dart.dart';
+
 import '../core/failures.dart';
 import '../models/gen.dart';
 
@@ -25,7 +26,8 @@ class FirebaseAuthService {
 
       return Failure(AppFailure('Falha ao criar usuário'));
     } on FirebaseAuthException catch (e) {
-      return Failure(AppFailure(e.message ?? 'Erro no Auth'));
+      final errorMessage = AuthErrors.translate(e.code);
+      return Failure(AppFailure(errorMessage));
     }
   }
 
@@ -39,7 +41,8 @@ class FirebaseAuthService {
           ? Success(cred.user!)
           : Failure(AppFailure('Usuário nulo'));
     } on FirebaseAuthException catch (e) {
-      return Failure(AppFailure(e.message ?? 'Erro no Login'));
+      final errorMessage = AuthErrors.translate(e.code);
+      return Failure(AppFailure(errorMessage));
     }
   }
   AsyncResult<Unit> updateDisplayName(String name) async {
@@ -54,7 +57,8 @@ class FirebaseAuthService {
 
       return const Success(unit);
     } on FirebaseAuthException catch (e) {
-      return Failure(AppFailure(e.message ?? 'Erro ao atualizar nome'));
+      final errorMessage = AuthErrors.translate(e.code);
+      return Failure(AppFailure(errorMessage));
     } catch (e) {
       return Failure(AppFailure('Erro desconhecido ao atualizar perfil'));
     }
