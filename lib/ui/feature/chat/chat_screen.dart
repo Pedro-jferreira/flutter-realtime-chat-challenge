@@ -123,11 +123,42 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Consumer<ChatViewModel>(
                   builder: (context, viewModel, _) {
+                    if (viewModel.errorMessage != null) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.cloud_off, size: 64, color: Theme
+                                .of(context)
+                                .colorScheme
+                                .onSurface),
+                            const SizedBox(height: 16),
+                            Text(
+                              viewModel.errorMessage!,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                  color: customColors?.textSecondary),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton.icon(
+                              onPressed: viewModel.retryConnection,
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Tentar Novamente'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                     if (viewModel.isLoadingMessage) {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
+
                     if (viewModel.messages.isEmpty) {
                       return const Center(
                         child: Text(

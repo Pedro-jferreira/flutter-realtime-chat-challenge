@@ -20,6 +20,8 @@ class ChatViewModel extends ChangeNotifier {
   String get currentUserId => _authRepository.currentUser?.uid ?? '';
 
   late final sendMessageCommand = Command1<Unit, String>(_sendMessage);
+  String? errorMessage;
+  Timer? _timeoutTimer;
 
   late final logoutCommand = Command0<Unit>(_logout);
 
@@ -33,20 +35,41 @@ class ChatViewModel extends ChangeNotifier {
 
   void _startListeningToMessages() {
     _messagesSubscription?.cancel();
+    _timeoutTimer?.cancel();
     isLoadingMessage = true;
+    errorMessage = null;
     notifyListeners();
+
+    _timeoutTimer = Timer(const Duration(seconds: 10), () {
+      if (isLoadingMessage) {
+        isLoadingMessage = false;
+        errorMessage = 'Demorou muito para carregar. Verifique sua conexão.';
+        notifyListeners();
+        _messagesSubscription?.cancel();
+      }
+    });
     _messagesSubscription = _chatRepository.getMessages().listen(
       (newMessages) {
+        _timeoutTimer?.cancel();
         newMessages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
         messages = newMessages;
         isLoadingMessage = false;
+        errorMessage = null;
         notifyListeners();
       },
       onError: (error) {
+        _timeoutTimer?.cancel();
         debugPrint('Erro: $error');
+        isLoadingMessage = false;
+        errorMessage = 'Falha na conexão. Verifique sua internet.';
+        notifyListeners();
       },
     );
+  }
+
+  void retryConnection() {
+    _startListeningToMessages();
   }
 
   AsyncResult<Unit> _sendMessage(String text) async =>
