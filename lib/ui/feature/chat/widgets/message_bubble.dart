@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart'; // Adicione intl no pubspec para formatar horas
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/gen.dart';
@@ -122,10 +122,10 @@ class _MessageBubbleState extends State<MessageBubble> {
 
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-
-          cchild: Material(
-            color: widget.isMe ? theme.colorScheme.primary : customColors
-                ?.neutralBackground,
+          child: Material(
+            color: widget.isMe
+                ? theme.colorScheme.primary
+                : customColors?.neutralBackground,
             borderRadius: borderRadius,
             surfaceTintColor: Colors.transparent,
             elevation: widget.isMe ? 1 : 0.5,
@@ -138,7 +138,9 @@ class _MessageBubbleState extends State<MessageBubble> {
               borderRadius: borderRadius,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 14),
+                  vertical: 10,
+                  horizontal: 14,
+                ),
                 child: Column(
                   crossAxisAlignment: widget.isMe
                       ? CrossAxisAlignment.end
