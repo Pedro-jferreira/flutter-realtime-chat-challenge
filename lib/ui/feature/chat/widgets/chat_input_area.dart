@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/theme.dart';
 import '../view_model/chat_viewmodel.dart';
 
 class ChatInputArea extends StatefulWidget {
@@ -22,12 +23,16 @@ class _ChatInputAreaState extends State<ChatInputArea> {
 
   @override
   Widget build(BuildContext context) {
+    final neutralColor = Theme
+        .of(context)
+        .extension<AppColorsExtension>()
+        ?.neutralBackground;
     return Consumer<ChatViewModel>(
       builder: (context, viewModel, _) {
         return Container(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: neutralColor,
             boxShadow: [
               BoxShadow(
                 offset: const Offset(0, -2),
@@ -48,17 +53,12 @@ class _ChatInputAreaState extends State<ChatInputArea> {
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 16),
                       filled: true,
-                      fillColor: Color(
-                        0xFFF4F6F8,
-                      ), // Background cinza claro arredondado
                     ),
-                    // Permite enviar com o "Enter" do teclado
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
 
-                // Botão de Enviar (com Loading)
                 ListenableBuilder(
                   listenable: viewModel.sendMessageCommand,
                   builder: (context, _) {

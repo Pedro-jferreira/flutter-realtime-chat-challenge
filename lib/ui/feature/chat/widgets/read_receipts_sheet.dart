@@ -32,10 +32,12 @@ class ReadReceiptsSheet extends StatelessWidget {
                 child: StreamBuilder<List<ReadReceipt>>(
                   stream: viewModel.getReadReceipts(messageId),
                   builder: (context, snapshot) {
-                    if (snapshot.hasError)
+                    if (snapshot.hasError) {
                       return const Text('Erro ao carregar.');
-                    if (!snapshot.hasData)
+                    }
+                    if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
+                    }
 
                     final receipts = snapshot.data!;
                     if (receipts.isEmpty) {

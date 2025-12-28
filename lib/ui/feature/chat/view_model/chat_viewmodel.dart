@@ -13,6 +13,7 @@ class ChatViewModel extends ChangeNotifier {
   final AuthRepository _authRepository;
 
   List<ChatMessage> messages = [];
+  bool isLoadingMessage = false;
 
   StreamSubscription<List<ChatMessage>>? _messagesSubscription;
 
@@ -32,11 +33,14 @@ class ChatViewModel extends ChangeNotifier {
 
   void _startListeningToMessages() {
     _messagesSubscription?.cancel();
+    isLoadingMessage = true;
+    notifyListeners();
     _messagesSubscription = _chatRepository.getMessages().listen(
       (newMessages) {
         newMessages.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
         messages = newMessages;
+        isLoadingMessage = false;
         notifyListeners();
       },
       onError: (error) {

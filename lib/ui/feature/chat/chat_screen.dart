@@ -4,6 +4,8 @@ import 'package:desafio_flugo_flutter/ui/feature/chat/widgets/message_bubble.dar
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/theme.dart';
+
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
@@ -35,9 +37,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final customColors = Theme.of(context).extension<AppColorsExtension>();
     return Scaffold(
-      backgroundColor: const Color(0xFFE5DDD5),
+      backgroundColor: Theme
+          .of(context)
+          .colorScheme
+          .surface,
       appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        backgroundColor: customColors?.neutralBackground,
         title: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -65,6 +74,11 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: Consumer<ChatViewModel>(
               builder: (context, viewModel, _) {
+                if (viewModel.isLoadingMessage) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                 if (viewModel.messages.isEmpty) {
                   return const Center(
                     child: Text(
