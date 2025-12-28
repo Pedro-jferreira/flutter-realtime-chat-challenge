@@ -1,9 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:result_dart/result_dart.dart';
+
 import '../core/failures.dart';
 import '../models/gen.dart';
 
-class RealtimeDbService {
+class UserService {
   final FirebaseDatabase _db = FirebaseDatabase.instance;
 
   AsyncResult<Unit> saveUser(ChatUser user) async {

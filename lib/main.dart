@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/dependency_injection.dart';
+import 'core/firebase_options.dart';
 import 'core/router.dart';
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'Desafio Chat Flutter',
             debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: ThemeMode.system,
             routerConfig: goRouter,
           );
         },

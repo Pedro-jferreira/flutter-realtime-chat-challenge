@@ -10,7 +10,7 @@ import '../repositories/chat_repository.dart';
 import '../services/chat_service.dart';
 // Services
 import '../services/firebase_auth_service.dart';
-import '../services/realtime_db_service.dart';
+import '../services/user_service.dart';
 
 // ... imports anteriores
 
@@ -24,16 +24,16 @@ class AppDependencies extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => FirebaseAuthService()),
-        Provider(create: (_) => RealtimeDbService()),
+        Provider(create: (_) => UserService()),
         Provider(create: (_) => ChatService()),
         ChangeNotifierProxyProvider2<
           FirebaseAuthService,
-          RealtimeDbService,
+          UserService,
           AuthRepository
         >(
           create: (context) => AuthRepository(
             authService: context.read<FirebaseAuthService>(),
-            dbService: context.read<RealtimeDbService>(),
+            dbService: context.read<UserService>(),
           ),
           update: (_, auth, db, previous) =>
               previous ?? AuthRepository(authService: auth, dbService: db),

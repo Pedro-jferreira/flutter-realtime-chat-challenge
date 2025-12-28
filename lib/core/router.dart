@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../repositories/auth_repository.dart';
 import '../ui/feature/chat/chat_screen.dart';
 import '../ui/feature/login/login_screen.dart';
-import '../ui/feature/profile/name_setup_screen.dart';
+import '../ui/feature/register/name_setup_screen.dart';
 
 GoRouter createRouter(AuthRepository authRepository) {
   return GoRouter(
@@ -16,7 +16,6 @@ GoRouter createRouter(AuthRepository authRepository) {
       final isLoggedIn = user != null;
       final hasName =
           user?.displayName != null && user!.displayName!.isNotEmpty;
-      print(user?.displayName);
 
       final currentPath = state.uri.toString();
       final isLoginLoc = currentPath == '/login' || currentPath == '/register';

@@ -7,17 +7,17 @@ import 'package:result_dart/result_dart.dart';
 import '../core/failures.dart';
 import '../models/gen.dart';
 import '../services/firebase_auth_service.dart';
-import '../services/realtime_db_service.dart';
+import '../services/user_service.dart';
 
 class AuthRepository extends ChangeNotifier {
   final FirebaseAuthService _authService;
-  final RealtimeDbService _dbService;
+  final UserService _dbService;
 
   late final StreamSubscription<User?> _authSubscription;
 
   AuthRepository({
     required FirebaseAuthService authService,
-    required RealtimeDbService dbService,
+    required UserService dbService,
   }) : _authService = authService,
        _dbService = dbService {
     _currentUser = _authService.currentUser;
