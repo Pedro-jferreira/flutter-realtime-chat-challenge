@@ -71,8 +71,6 @@ Siga os passos abaixo para baixar o código, configurar e gerar o arquivo de ins
 
 * Flutter SDK instalado e configurado.
 * Java/JDK configurado.
-* **Importante:** Você precisará adicionar seu próprio arquivo `google-services.json` (do Firebase Console) na pasta
-  `android/app/` para que o app conecte ao banco de dados.
 
 ### Passo a Passo
 
